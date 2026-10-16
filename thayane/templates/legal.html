@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block titulo %}{{ 'Termos de Serviço' if tipo == 'termos' else 'Política de Privacidade' }} | Thayane Luíze{% endblock %}
+{% block conteudo %}
+<div class="container article">
+  {% if tipo == 'termos' %}
+    <h1>Termos de Serviço</h1>
+    <p>Este site apresenta os serviços da nutricionista Thayane Luíze Lopes de Souza Alcântara (CRN {{ contato.crn }}). O conteúdo do blog tem caráter informativo e não substitui consulta nutricional individualizada.</p>
+    <p>O formulário de agendamento é uma solicitação: o atendimento só é confirmado após contato da profissional. Valores e condições podem ser alterados a qualquer momento.</p>
+  {% else %}
+    <h1>Política de Privacidade</h1>
+    <p>Os dados informados no formulário de agendamento (nome, e-mail, telefone, data, horário e mensagem) são usados somente para entrar em contato e organizar o atendimento, em conformidade com a LGPD.</p>
+    <p>Não vendemos nem compartilhamos seus dados com terceiros. Para solicitar acesso, correção ou exclusão, fale conosco pelo e-mail do site.</p>
+  {% endif %}
+  <p><a class="btn btn-primary" href="/">Voltar ao início</a></p>
+</div>
+{% endblock %}

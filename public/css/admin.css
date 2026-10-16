@@ -1,0 +1,46 @@
+:root{--g900:#14391f;--g800:#1b4d2e;--g700:#2E7D32;--g100:#E8F5E9;--gold:#C9A24B;--ink:#1d2a21;--muted:#5b6b60}
+*{box-sizing:border-box}
+body{margin:0;font:400 1rem/1.55 "Jost",system-ui,sans-serif;color:var(--ink);background:#f3f7f4}
+a{color:var(--g700)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.sidebar{background:var(--g900);color:#fff;padding:1.2rem;display:flex;flex-direction:column;gap:1.2rem;position:sticky;top:0;height:100vh}
+.side-brand{display:flex;gap:.7rem;align-items:center;font-weight:600}.side-brand img{border-radius:8px}.side-brand small{color:#E3C77A;font-weight:400}
+.sidebar nav{display:flex;flex-direction:column;gap:.2rem;flex:1}
+.sidebar nav a{color:#e5efe6;text-decoration:none;padding:.65rem .8rem;border-radius:10px;border-left:4px solid transparent}
+.sidebar nav a:hover{background:rgba(255,255,255,.08)}
+.sidebar nav a.active{background:rgba(255,255,255,.14);border-left-color:var(--gold);font-weight:600}
+.logout{width:100%;background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.4);border-radius:10px;padding:.6rem;cursor:pointer;font:inherit}
+.logout:hover{background:rgba(255,255,255,.1)}
+.content{padding:2rem clamp(1rem,3vw,2.5rem);max-width:1100px;width:100%}
+h1{font-size:1.9rem;margin:0 0 .3rem;color:var(--g900)}h2{font-size:1.2rem;margin:0 0 1rem;color:var(--g900)}
+.sub{color:var(--muted);margin-bottom:1.5rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.stat{background:#fff;border-radius:16px;padding:1.4rem;text-decoration:none;color:var(--ink);box-shadow:0 4px 14px rgba(20,57,31,.08);display:flex;flex-direction:column;border-top:4px solid var(--gold)}
+.stat b{font-size:2rem;color:var(--g800)}.stat span{color:var(--muted)}.stat:hover{box-shadow:0 8px 22px rgba(20,57,31,.15)}
+.panel{background:#fff;border-radius:16px;padding:1.5rem;margin:1.2rem 0;box-shadow:0 4px 14px rgba(20,57,31,.07)}
+.form{display:grid;gap:.35rem;max-width:680px}
+label{font-weight:500;margin-top:.5rem}
+input:not([type=checkbox]),textarea,select{width:100%;padding:.65rem .8rem;border:1.5px solid #bfd3c2;border-radius:10px;font:inherit}
+input:focus,textarea:focus{outline:none;border-color:var(--g700);box-shadow:0 0 0 3px rgba(102,187,106,.3)}
+.check{display:flex;gap:.5rem;align-items:center;font-weight:400}
+.err{color:#b3261e;font-size:.85rem}
+.row{display:flex;gap:.7rem;margin-top:1rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;background:var(--g800);color:#fff;border:2px solid var(--g800);border-radius:10px;padding:.6rem 1.2rem;font:600 1rem "Jost",sans-serif;cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--g700)}
+.btn-ghost{background:#fff;color:var(--g800)}.btn-ghost:hover{background:var(--g100)}
+.btn-danger{background:#fff;color:#b3261e;border-color:#b3261e}.btn-danger:hover{background:#fdecea}
+.btn-sm{padding:.3rem .8rem;font-size:.9rem}
+.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:520px}
+th,td{text-align:left;padding:.7rem .6rem;border-bottom:1px solid #e2ece4;vertical-align:middle}
+th{color:var(--muted);font-weight:500;font-size:.9rem}
+.actions{display:flex;gap:.4rem;flex-wrap:wrap}.actions form{margin:0}
+.pill{padding:.15rem .7rem;border-radius:999px;font-size:.85rem;font-weight:500;border:1.5px solid}
+.pill.on{background:var(--g100);color:var(--g800);border-color:var(--g700)}
+.pill.off{background:#f5f5f5;color:#666;border-color:#999}
+.alert{padding:.8rem 1rem;border-radius:10px;margin:1rem 0;border-left:5px solid}
+.alert.ok{background:var(--g100);border-color:var(--g700)}.alert.err{background:#fdecea;border-color:#b3261e;color:#7a1712;font-size:1rem}
+.login-page{display:grid;place-items:center;min-height:100vh;background:linear-gradient(160deg,#14391f,#1b4d2e)}
+.login-card{background:#fff;border-radius:20px;padding:2rem;width:min(400px,92%);text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.login-card img{margin:0 auto 1rem;border-radius:12px}.login-card form{display:grid;gap:.4rem;text-align:left}.login-card .btn{justify-content:center;margin-top:1rem}
+@media (max-width:820px){.layout{grid-template-columns:1fr}.sidebar{position:static;height:auto}.sidebar nav{flex-direction:row;flex-wrap:wrap}}

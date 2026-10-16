@@ -1,0 +1,38 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import campo, area, marcar, csrf, excluir, mensagens %}
+{% block titulo %}Blog{% endblock %}
+{% block conteudo %}
+  <h1>Blog</h1>
+  {{ mensagens() }}
+  <section class="panel">
+    <h2>{{ 'Editar publicação' if valores.get('id') else 'Nova publicação' }}</h2>
+    <form action="/admin/posts/salvar" method="post" class="form">
+      {{ csrf() }}<input type="hidden" name="id" value="{{ valores.get('id') or '' }}">
+      {{ campo('titulo', 'Título', valores, erros, max=160) }}
+      {{ campo('categoria', 'Categoria', valores, erros, max=60) }}
+      {{ campo('data_publicacao', 'Data de publicação', valores, erros, 'date') }}
+      {{ campo('imagem_url', 'Imagem (caminho ou link, ex.: /images/blog-1.svg)', valores, erros, max=500) }}
+      {{ area('resumo', 'Resumo', valores, erros, 2, 500) }}
+      {{ area('conteudo', 'Texto', valores, erros, 10, 20000) }}
+      {{ marcar('ativo', 'Publicado (visível no site)', valores) }}
+      <div class="row"><button class="btn" type="submit">Salvar publicação</button>{% if valores.get('id') %}<a class="btn btn-ghost" href="/admin/posts">Cancelar</a>{% endif %}</div>
+    </form>
+  </section>
+  <section class="panel">
+    <h2>Publicações</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Título</th><th>Categoria</th><th>Data</th><th>Status</th><th>Ações</th></tr></thead>
+      <tbody>
+        {% for p in itens %}
+        <tr>
+          <td>{{ p.titulo }}</td><td>{{ p.categoria }}</td><td>{{ p.data_publicacao|data_br }}</td>
+          <td><span class="pill {{ 'on' if p.ativo else 'off' }}">{{ 'Publicado' if p.ativo else 'Oculto' }}</span></td>
+          <td class="actions">
+            <a class="btn btn-sm btn-ghost" href="/admin/posts?editar={{ p.id }}">Editar</a>
+            {{ excluir('/admin/posts/%d/excluir' % p.id, 'Excluir esta publicação?') }}
+          </td>
+        </tr>
+        {% else %}<tr><td colspan="5">Nenhuma publicação.</td></tr>{% endfor %}
+      </tbody></table></div>
+  </section>
+{% endblock %}

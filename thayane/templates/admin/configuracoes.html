@@ -1,0 +1,43 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import campo, marcar, csrf, excluir, mensagens %}
+{% block titulo %}Configurações{% endblock %}
+{% block conteudo %}
+  <h1>Configurações</h1>
+  {{ mensagens() }}
+  <section class="panel">
+    <h2>Informações de contato</h2>
+    <form action="/admin/configuracoes/contato" method="post" class="form">
+      {{ csrf() }}
+      {{ campo('email', 'E-mail', c_valores, c_erros, 'email', 160) }}
+      {{ campo('whatsapp', 'WhatsApp (com DDI e DDD)', c_valores, c_erros, max=25) }}
+      {{ campo('telefone', 'Telefone', c_valores, c_erros, max=40) }}
+      {{ campo('instagram', 'Instagram (sem @)', c_valores, c_erros, max=80) }}
+      {{ campo('crn', 'CRN', c_valores, c_erros, max=20) }}
+      <div class="row"><button class="btn" type="submit">Salvar contato</button></div>
+    </form>
+  </section>
+  <section class="panel">
+    <h2>{{ 'Editar rede social' if valores.get('id') else 'Nova rede social' }}</h2>
+    <form action="/admin/configuracoes/redes/salvar" method="post" class="form">
+      {{ csrf() }}<input type="hidden" name="id" value="{{ valores.get('id') or '' }}">
+      {{ campo('nome', 'Nome (ex.: TikTok, LinkedIn)', valores, erros, max=60) }}
+      {{ campo('url', 'Link (https://...)', valores, erros, 'url', 300) }}
+      {{ marcar('ativo', 'Visível no site', valores) }}
+      <div class="row"><button class="btn" type="submit">Salvar rede</button>{% if valores.get('id') %}<a class="btn btn-ghost" href="/admin/configuracoes">Cancelar</a>{% endif %}</div>
+    </form>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Rede</th><th>Link</th><th>Status</th><th>Ações</th></tr></thead>
+      <tbody>
+        {% for r in itens %}
+        <tr>
+          <td>{{ r.nome }}</td><td>{{ r.url }}</td>
+          <td><span class="pill {{ 'on' if r.ativo else 'off' }}">{{ 'Visível' if r.ativo else 'Oculta' }}</span></td>
+          <td class="actions">
+            <a class="btn btn-sm btn-ghost" href="/admin/configuracoes?editar_rede={{ r.id }}">Editar</a>
+            {{ excluir('/admin/configuracoes/redes/%d/excluir' % r.id, 'Remover esta rede?') }}
+          </td>
+        </tr>
+        {% else %}<tr><td colspan="4">Nenhuma rede adicional cadastrada.</td></tr>{% endfor %}
+      </tbody></table></div>
+  </section>
+{% endblock %}

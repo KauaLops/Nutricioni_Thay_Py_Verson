@@ -1,0 +1,26 @@
+{% from "admin/_macros.html" import csrf, mensagens %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Entrar | Painel Thayane-Nutri</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="login-page">
+<main class="login-card">
+  <img src="/images/logo.jpg" alt="Thayane Luíze Nutricionista" width="140">
+  <h1>Área administrativa</h1>
+  {{ mensagens() }}
+  <form action="/admin/login" method="post">
+    {{ csrf() }}
+    <label for="email">E-mail ou usuário</label>
+    <input id="email" name="email" type="text" required autocomplete="username" autofocus>
+    <label for="senha">Senha</label>
+    <input id="senha" name="senha" type="password" required autocomplete="current-password">
+    <button class="btn" type="submit">Entrar</button>
+  </form>
+</main>
+</body>
+</html>

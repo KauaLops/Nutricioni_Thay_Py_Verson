@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% from "partials/_icons.html" import ico %}
+{% block conteudo %}
+  <!-- INÍCIO -->
+  <section id="inicio" class="hero" aria-labelledby="hero-titulo">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <p class="crn-badge">{{ ico('badge') }} CRN {{ contato.crn }}</p>
+        <h1 id="hero-titulo">Thayane Luíze <span>Nutricionista</span></h1>
+        <p class="lead">Alimentação saudável pensada para a sua rotina, sem radicalismos e com acompanhamento de perto.</p>
+        <p>Sou Thayane Luíze Lopes de Souza Alcântara. Meu atendimento une ciência e cuidado para que você tenha uma relação mais leve com a comida, mais energia e qualidade de vida.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="/#agendamento" data-scroll="agendamento">Agendar Consulta</a>
+          <a class="btn btn-outline" href="/#trabalho" data-scroll="trabalho">Conheça meu trabalho</a>
+        </div>
+      </div>
+      <figure class="hero-photo">
+        <img src="/images/hero.jpg" alt="Nutricionista Thayane Luíze sentada à mesa de atendimento, sorrindo" width="750" height="1000" fetchpriority="high">
+      </figure>
+    </div>
+  </section>
+
+  <!-- TRABALHO -->
+  <section id="trabalho" class="section section-soft" aria-labelledby="trabalho-titulo">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2 id="trabalho-titulo">Meu trabalho</h2>
+        <p>Formação, vivências e atuação que sustentam um cuidado nutricional baseado em ciência.</p>
+      </div>
+      <div class="grid-3">
+        {% for t in trabalhos %}
+        <article class="card work reveal">
+          <img src="{{ t.imagem_url }}" alt="{{ t.titulo }}" loading="lazy" width="400" height="300">
+          <div class="card-body">
+            <span class="tag">{{ t.categoria }}</span>
+            <h3>{{ t.titulo }}</h3>
+            <p>{{ t.descricao }}</p>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+      {% if not trabalhos %}<p class="empty">Em breve, novos trabalhos por aqui.</p>{% endif %}
+    </div>
+  </section>
+
+  <!-- AGENDAMENTO -->
+  <section id="agendamento" class="section bg-folhas" aria-labelledby="agend-titulo">
+    <div class="container agend-grid">
+      <div class="reveal">
+        <h2 id="agend-titulo">Agende sua consulta</h2>
+        <p>Conte um pouco sobre você e escolha o melhor dia e horário. Entraremos em contato para confirmar o atendimento.</p>
+        <ul class="checks">
+          <li>Atendimento individualizado</li>
+          <li>Plano alimentar para a sua rotina</li>
+          <li>Retorno com acompanhamento</li>
+        </ul>
+      </div>
+      <form id="form-agendamento" class="form-card reveal" novalidate>
+        <div class="field"><label for="ag-nome">Nome completo</label><input id="ag-nome" name="nome" type="text" maxlength="120" required autocomplete="name"><small class="err" data-for="nome"></small></div>
+        <div class="field two">
+          <div><label for="ag-email">E-mail</label><input id="ag-email" name="email" type="email" maxlength="160" required autocomplete="email"><small class="err" data-for="email"></small></div>
+          <div><label for="ag-tel">Telefone</label><input id="ag-tel" name="telefone" type="tel" maxlength="20" required autocomplete="tel" placeholder="(83) 90000-0000"><small class="err" data-for="telefone"></small></div>
+        </div>
+        <div class="field two">
+          <div><label for="ag-data">Data desejada</label><input id="ag-data" name="data" type="date" required><small class="err" data-for="data"></small></div>
+          <div><label for="ag-hora">Horário desejado</label>
+            <select id="ag-hora" name="horario" required>
+              <option value="">Selecione</option>
+              {% for h in range(8, 19) %}<option value="{{ '%02d' % h }}:00">{{ '%02d' % h }}:00</option>{% endfor %}
+            </select><small class="err" data-for="horario"></small></div>
+        </div>
+        <div class="field"><label for="ag-tipo">Tipo de atendimento</label>
+          <select id="ag-tipo" name="tipo" required>
+            <option value="">Selecione</option>
+            {% for s in servicos %}<option value="{{ s.nome }}">{{ s.nome }}</option>{% else %}<option value="Consulta nutricional">Consulta nutricional</option>{% endfor %}
+          </select><small class="err" data-for="tipo"></small></div>
+        <div class="field"><label for="ag-msg">Mensagem ou observação <span class="opt">(opcional)</span></label><textarea id="ag-msg" name="mensagem" rows="4" maxlength="1000"></textarea><small class="err" data-for="mensagem"></small></div>
+        <button class="btn btn-primary" type="submit" id="ag-enviar">Solicitar Agendamento</button>
+        <p id="ag-status" class="status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato" class="section section-green" aria-labelledby="contato-titulo">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2 id="contato-titulo">Entre em contato</h2>
+        <p>Escolha o canal que for mais confortável para você.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card reveal">
+          {{ ico('whatsapp') }}
+          <h3>WhatsApp</h3><p>{{ contato.whatsapp }}</p>
+          <a class="btn btn-gold" href="{{ contato.whatsapp_link }}" target="_blank" rel="noopener noreferrer">Chamar no WhatsApp</a>
+        </div>
+        <div class="contact-card reveal">
+          {{ ico('instagram') }}
+          <h3>Instagram</h3><p>@{{ contato.instagram_usuario }}</p>
+          <a class="btn btn-gold" href="{{ contato.instagram_link }}" target="_blank" rel="noopener noreferrer">Ver Instagram</a>
+        </div>
+        <div class="contact-card reveal">
+          {{ ico('mail') }}
+          <h3>E-mail</h3><p class="wrap">{{ contato.email }}</p>
+          <a class="btn btn-gold" href="mailto:{{ contato.email }}">Enviar e-mail</a>
+        </div>
+       
+          {{ ico('') }}
+          
+        {% for r in redes %}
+        <div class="contact-card reveal">
+          {{ ico('link') }}
+          <h3>{{ r.nome }}</h3><p>Siga e acompanhe</p>
+          <a class="btn btn-gold" href="{{ r.url }}" target="_blank" rel="noopener noreferrer">Acessar</a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- PREÇOS -->
+  <section id="precos" class="section bg-folhas" aria-labelledby="precos-titulo">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2 id="precos-titulo">Serviços e valores</h2>
+        <p>Veja os serviços e escolha o que combina com o seu momento.</p>
+      </div>
+      {% if servicos %}
+      <div class="carousel reveal" id="carousel" role="region" aria-roledescription="carrossel" aria-label="Serviços e preços">
+        <div class="carousel-stage">
+          <div class="ring" id="ring">
+            {% for s in servicos %}
+            <article class="price-card">
+              <h3>{{ s.nome }}</h3>
+              <p class="price"><span>R$</span> <b>{{ s.preco|brl }}</b></p>
+              <p class="desc">{{ s.descricao }}</p>
+              <ul class="checks">{% for b in s.lista_beneficios %}<li>{{ b }}</li>{% endfor %}</ul>
+              <a class="btn btn-primary" href="/#agendamento" data-scroll="agendamento" data-servico="{{ s.nome }}" aria-label="Agendar {{ s.nome }}">Agendar</a>
+            </article>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <button type="button" id="prev" aria-label="Serviço anterior">‹</button>
+          <button type="button" id="next" aria-label="Próximo serviço">›</button>
+        </div>
+      </div>
+      {% else %}
+      <p class="empty">Os valores serão divulgados em breve. Fale comigo pelo WhatsApp.</p>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog" class="section section-soft" aria-labelledby="blog-titulo">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2 id="blog-titulo">Blog</h2>
+        <p>Conteúdos simples e confiáveis para cuidar melhor da alimentação.</p>
+      </div>
+      <div class="grid-3">
+        {% for p in posts %}
+        <article class="card post reveal">
+          <img src="{{ p.imagem_url }}" alt="Ilustração do artigo: {{ p.titulo }}" loading="lazy" width="400" height="225">
+          <div class="card-body">
+            <p class="meta"><span class="tag">{{ p.categoria }}</span> <time datetime="{{ p.data_publicacao.isoformat() }}">{{ p.data_publicacao|data_br }}</time></p>
+            <h3>{{ p.titulo }}</h3>
+            <p>{{ p.resumo }}</p>
+            <a class="more" href="/blog/{{ p.id }}" aria-label="Leia mais: {{ p.titulo }}">Leia mais</a>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+      {% if not posts %}<p class="empty">Novos artigos em breve.</p>{% endif %}
+    </div>
+  </section>
+{% endblock %}

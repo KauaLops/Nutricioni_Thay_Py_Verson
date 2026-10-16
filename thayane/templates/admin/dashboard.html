@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import mensagens %}
+{% block titulo %}Visão geral{% endblock %}
+{% block conteudo %}
+  <h1>Olá, bem-vinda!</h1>
+  <p class="sub">Gerencie o conteúdo do site. As alterações aparecem na página pública imediatamente.</p>
+  {{ mensagens() }}
+  <div class="stats">
+    <a class="stat" href="/admin/trabalhos"><b>{{ qt_trabalhos }}</b><span>Trabalhos</span></a>
+    <a class="stat" href="/admin/precos"><b>{{ qt_servicos }}</b><span>Serviços e preços</span></a>
+    <a class="stat" href="/admin/posts"><b>{{ qt_posts }}</b><span>Publicações do blog</span></a>
+    <a class="stat" href="/admin/configuracoes"><b>Contato</b><span>Redes e informações</span></a>
+  </div>
+{% endblock %}

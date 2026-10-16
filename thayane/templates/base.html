@@ -1,0 +1,76 @@
+{% from "partials/_icons.html" import ico %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Thayane Luíze | Nutricionista{% endblock %}</title>
+  <meta name="description" content="{% block descricao %}Portfólio profissional da nutricionista Thayane Luíze Lopes de Souza Alcântara.{% endblock %}">
+  <meta name="theme-color" content="#14391f">
+  <meta name="_csrf" content="{{ csrf_token() }}">
+  <meta name="_csrf_header" content="X-CSRF-TOKEN">
+  <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href="/#inicio" data-scroll="inicio" aria-label="Thayane Luíze, nutricionista — voltar ao início">
+      <img src="/images/logo.jpg" alt="" width="44" height="44">
+      <span>Thayane Luíze<small>Nutricionista</small></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+    <nav id="menu" class="nav" aria-label="Principal">
+      <a href="/#inicio" data-scroll="inicio">Início</a>
+      <a href="/#agendamento" data-scroll="agendamento">Agendamento</a>
+      <a href="/#contato" data-scroll="contato">Contato</a>
+      <a href="/#precos" data-scroll="precos">Preços</a>
+      <a href="/#blog" data-scroll="blog">Blog</a>
+      <a class="btn btn-gold nav-cta" href="/#agendamento" data-scroll="agendamento">Agendar Consulta</a>
+    </nav>
+  </div>
+</header>
+
+<main id="conteudo">
+{% block conteudo %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="container foot-grid">
+    <div>
+      <img src="/images/logo.jpg" alt="Logotipo Thayane Luíze Nutricionista" width="150" class="foot-logo">
+      <p class="foot-name">Thayane Luíze Lopes de Souza Alcântara</p>
+      <p>Nutricionista · CRN {{ contato.crn }}</p>
+    </div>
+    <div>
+      <h2>Links rápidos</h2>
+      <ul class="plain">
+        <li><a href="/#inicio" data-scroll="inicio">Início</a></li>
+        <li><a href="/#agendamento" data-scroll="agendamento">Agendamento</a></li>
+        <li><a href="/#contato" data-scroll="contato">Contato</a></li>
+        <li><a href="/#precos" data-scroll="precos">Preços</a></li>
+        <li><a href="/#blog" data-scroll="blog">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Redes sociais</h2>
+      <ul class="plain">
+        <li><a href="{{ contato.instagram_link }}" target="_blank" rel="noopener noreferrer">{{ ico('instagram') }} Instagram</a></li>
+        <li><a href="{{ contato.whatsapp_link }}" target="_blank" rel="noopener noreferrer">{{ ico('whatsapp') }} WhatsApp</a></li>
+        <li><a href="mailto:{{ contato.email }}">{{ ico('mail') }} E-mail</a></li>
+        {% for r in redes %}<li><a href="{{ r.url }}" target="_blank" rel="noopener noreferrer">{{ ico('link') }} {{ r.nome }}</a></li>{% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container foot-bottom">
+    <p>© 2026 Thayane Luíze Lopes de Souza Alcântara. Todos os direitos reservados.</p>
+    <p><a href="/termos">Termos de Serviço</a> · <a href="/privacidade">Política de Privacidade</a></p>
+  </div>
+</footer>
+<script src="/js/site.js" defer></script>
+</body>
+</html>

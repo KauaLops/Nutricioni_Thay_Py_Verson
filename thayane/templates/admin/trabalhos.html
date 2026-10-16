@@ -1,0 +1,36 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import campo, area, marcar, csrf, excluir, mensagens %}
+{% block titulo %}Trabalhos{% endblock %}
+{% block conteudo %}
+  <h1>Trabalhos</h1>
+  {{ mensagens() }}
+  <section class="panel">
+    <h2>{{ 'Editar trabalho' if valores.get('id') else 'Novo trabalho' }}</h2>
+    <form action="/admin/trabalhos/salvar" method="post" class="form">
+      {{ csrf() }}<input type="hidden" name="id" value="{{ valores.get('id') or '' }}">
+      {{ campo('titulo', 'Título', valores, erros, max=160) }}
+      {{ campo('categoria', 'Categoria', valores, erros, max=60) }}
+      {{ campo('imagem_url', 'Imagem (caminho ou link, ex.: /images/hero.jpg)', valores, erros, max=500) }}
+      {{ area('descricao', 'Descrição', valores, erros, 3, 1000) }}
+      {{ marcar('ativo', 'Visível no site', valores) }}
+      <div class="row"><button class="btn" type="submit">Salvar trabalho</button>{% if valores.get('id') %}<a class="btn btn-ghost" href="/admin/trabalhos">Cancelar</a>{% endif %}</div>
+    </form>
+  </section>
+  <section class="panel">
+    <h2>Cadastrados</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Título</th><th>Categoria</th><th>Status</th><th>Ações</th></tr></thead>
+      <tbody>
+        {% for t in itens %}
+        <tr>
+          <td>{{ t.titulo }}</td><td>{{ t.categoria }}</td>
+          <td><span class="pill {{ 'on' if t.ativo else 'off' }}">{{ 'Visível' if t.ativo else 'Oculto' }}</span></td>
+          <td class="actions">
+            <a class="btn btn-sm btn-ghost" href="/admin/trabalhos?editar={{ t.id }}">Editar</a>
+            {{ excluir('/admin/trabalhos/%d/excluir' % t.id, 'Excluir este trabalho?') }}
+          </td>
+        </tr>
+        {% else %}<tr><td colspan="4">Nenhum trabalho cadastrado.</td></tr>{% endfor %}
+      </tbody></table></div>
+  </section>
+{% endblock %}

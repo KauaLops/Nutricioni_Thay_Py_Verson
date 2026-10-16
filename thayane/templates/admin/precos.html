@@ -1,0 +1,37 @@
+{% extends "admin/base.html" %}
+{% from "admin/_macros.html" import campo, area, marcar, csrf, excluir, mensagens %}
+{% block titulo %}Preços{% endblock %}
+{% block conteudo %}
+  <h1>Serviços e preços</h1>
+  {{ mensagens() }}
+  <section class="panel">
+    <h2>{{ 'Editar serviço' if valores.get('id') else 'Novo serviço' }}</h2>
+    <form action="/admin/precos/salvar" method="post" class="form">
+      {{ csrf() }}<input type="hidden" name="id" value="{{ valores.get('id') or '' }}">
+      {{ campo('nome', 'Nome do serviço', valores, erros, max=120) }}
+      {{ area('descricao', 'Descrição', valores, erros, 2, 500) }}
+      {{ campo('preco', 'Preço (R$)', valores, erros, 'text', extra='inputmode="decimal"') }}
+      {{ area('beneficios', 'Benefícios (um por linha)', valores, erros, 4, 1000) }}
+      {{ marcar('ativo', 'Serviço ativo (visível no site)', valores) }}
+      <div class="row"><button class="btn" type="submit">Salvar serviço</button>{% if valores.get('id') %}<a class="btn btn-ghost" href="/admin/precos">Cancelar</a>{% endif %}</div>
+    </form>
+  </section>
+  <section class="panel">
+    <h2>Cadastrados</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Serviço</th><th>Preço</th><th>Status</th><th>Ações</th></tr></thead>
+      <tbody>
+        {% for s in itens %}
+        <tr>
+          <td>{{ s.nome }}</td><td>R$ {{ s.preco|brl }}</td>
+          <td><span class="pill {{ 'on' if s.ativo else 'off' }}">{{ 'Ativo' if s.ativo else 'Inativo' }}</span></td>
+          <td class="actions">
+            <a class="btn btn-sm btn-ghost" href="/admin/precos?editar={{ s.id }}">Editar</a>
+            <form action="/admin/precos/{{ s.id }}/alternar" method="post">{{ csrf() }}<button class="btn btn-sm btn-ghost" type="submit">{{ 'Desativar' if s.ativo else 'Ativar' }}</button></form>
+            {{ excluir('/admin/precos/%d/excluir' % s.id, 'Excluir este serviço?') }}
+          </td>
+        </tr>
+        {% else %}<tr><td colspan="4">Nenhum serviço cadastrado.</td></tr>{% endfor %}
+      </tbody></table></div>
+  </section>
+{% endblock %}

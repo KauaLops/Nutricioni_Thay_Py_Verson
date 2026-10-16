@@ -1,0 +1,22 @@
+{% macro campo(nome, rotulo, valores, erros, tipo='text', max=None, extra='') -%}
+<label for="{{ nome }}">{{ rotulo }}</label>
+<input id="{{ nome }}" name="{{ nome }}" type="{{ tipo }}" value="{{ valores.get(nome, '') }}"{% if max %} maxlength="{{ max }}"{% endif %} {{ extra|safe }}>
+{% if erros.get(nome) %}<small class="err">{{ erros[nome] }}</small>{% endif %}
+{%- endmacro %}
+{% macro area(nome, rotulo, valores, erros, linhas=3, max=None) -%}
+<label for="{{ nome }}">{{ rotulo }}</label>
+<textarea id="{{ nome }}" name="{{ nome }}" rows="{{ linhas }}"{% if max %} maxlength="{{ max }}"{% endif %}>{{ valores.get(nome, '') }}</textarea>
+{% if erros.get(nome) %}<small class="err">{{ erros[nome] }}</small>{% endif %}
+{%- endmacro %}
+{% macro marcar(nome, rotulo, valores) -%}
+<label class="check"><input type="checkbox" name="{{ nome }}" {% if valores.get(nome) %}checked{% endif %}> {{ rotulo }}</label>
+{%- endmacro %}
+{% macro csrf() -%}<input type="hidden" name="_csrf" value="{{ csrf_token() }}">{%- endmacro %}
+{% macro excluir(url, pergunta) -%}
+<form action="{{ url }}" method="post" data-confirm="{{ pergunta }}">{{ csrf() }}<button class="btn btn-sm btn-danger" type="submit">Excluir</button></form>
+{%- endmacro %}
+{% macro mensagens() -%}
+{% with msgs = get_flashed_messages(with_categories=true) %}{% for cat, m in msgs %}
+<p class="alert {{ 'ok' if cat == 'ok' else 'err' }}" role="{{ 'status' if cat == 'ok' else 'alert' }}">{{ m }}</p>
+{% endfor %}{% endwith %}
+{%- endmacro %}

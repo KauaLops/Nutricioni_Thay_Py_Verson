@@ -1,0 +1,29 @@
+{% from "admin/_macros.html" import csrf, mensagens %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>{% block titulo %}Painel{% endblock %} | Painel Thayane-Nutri</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="side-brand"><img src="/images/logo.jpg" alt="" width="40" height="40"><span>Painel<br><small>Thayane-Nutri</small></span></div>
+  <nav aria-label="Administração">
+    {% for slug, rotulo, url in [('dashboard','Visão geral','/admin/'),('trabalhos','Trabalhos','/admin/trabalhos'),('precos','Preços','/admin/precos'),('posts','Blog','/admin/posts'),('config','Configurações','/admin/configuracoes')] %}
+    <a href="{{ url }}" class="{{ 'active' if pagina == slug }}"{% if pagina == slug %} aria-current="page"{% endif %}>{{ rotulo }}</a>
+    {% endfor %}
+    <a href="/" target="_blank" rel="noopener">Ver site</a>
+  </nav>
+  <form action="/admin/logout" method="post">{{ csrf() }}<button type="submit" class="logout">Sair</button></form>
+</aside>
+<main class="content">
+  {% block conteudo %}{% endblock %}
+</main>
+</div>
+<script src="/js/admin.js" defer></script>
+</body>
+</html>
