@@ -1,0 +1,28 @@
+# Chave que assina os cookies de sessão (gere com: python -c "import secrets; print(secrets.token_hex(32))")
+SECRET_KEY=
+
+# Banco PostgreSQL (Supabase): cole a URL do "Session pooler" ou "Transaction pooler"
+# Ex.: postgresql://postgres.SEU_REF:SUA_SENHA@aws-0-REGIAO.pooler.supabase.com:6543/postgres
+DATABASE_URL=
+# (alternativa à DATABASE_URL, para Postgres local)
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=exemplo_bd
+DB_USERNAME=postgres
+DB_PASSWORD=SUA_SENHA_AQUI
+DB_SSLMODE=prefer
+
+# E-mail (SMTP) do formulário de agendamento
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=exemplo@gmail.com
+MAIL_PASSWORD=SUA_SENHA_GOOGLE_AQUI
+MAIL_DESTINO=exemplo@gmail.com
+
+# Usados somente na PRIMEIRA execução para criar o administrador
+ADMIN_EMAIL=exemplo@gmail.com
+ADMIN_PASSWORD=SUA_SENHA_AQUI
+ADMIN_NOME=admin
+
+# Somente desenvolvimento local (desliga cookie "Secure" e mostra erros): 1
+FLASK_DEBUG=
